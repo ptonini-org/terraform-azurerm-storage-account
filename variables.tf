@@ -12,6 +12,12 @@ variable "randomize_name" {
   nullable = false
 }
 
+variable "account_kind" {
+  default  = "StorageV2"
+  nullable = false
+}
+
+
 variable "account_tier" {
   default  = "Standard"
   nullable = false
@@ -37,9 +43,25 @@ variable "infrastructure_encryption_enabled" {
   nullable = false
 }
 
+variable "static_website" {
+  type = object({
+    index_document     = optional(string, "index.html")
+    error_404_document = optional(string)
+  })
+  default = null
+}
+
+variable "custom_domain" {
+  type = object({
+    name          = string
+    use_subdomain = optional(bool)
+  })
+  default = null
+}
+
 variable "containers" {
   type = map(object({
-    access_type = string
+    access_type = optional(string)
   }))
   default  = {}
   nullable = false
